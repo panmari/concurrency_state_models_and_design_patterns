@@ -16,7 +16,7 @@ public class Player implements Runnable {
 		while (alive) {
 			try {
 				System.out.println(name + " is trying to get the gun.");
-				Gun gun = table.takeGunFairly(this);
+				Gun gun = table.takeGun(this);
 				System.out.println(name + " is holding gun.");
 				boolean didShoot = gun.pullTrigger();
 				if (didShoot) {
