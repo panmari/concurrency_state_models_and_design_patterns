@@ -31,7 +31,7 @@ public class MessageQueue {
 		return removedMessage;
 	}
 	
-	public synchronized int size() {
+	public int size() {
 		return messageQueue.size();
 	}
 }
