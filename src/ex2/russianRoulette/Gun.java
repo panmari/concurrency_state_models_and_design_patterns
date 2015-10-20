@@ -14,12 +14,16 @@ public class Gun {
 		
 		// TODO: initialize chambers randomly.
 		for (int i = 0; i < nr_bullets; i++) {
-			chambers[i] = true;
+			chambers[nr_chambers - 1 - i] = true;
 		}
 	}
 	
-	public boolean pullTrigger() {
+	public synchronized boolean pullTrigger() throws AllChambersTriedException {
+		if (currentPosition >= chambers.length)
+			throw new AllChambersTriedException();
 		boolean didShoot = chambers[currentPosition];
+		// Provokes a race condition if not synchronized.
+		Thread.yield();
 		currentPosition++;
 		return didShoot;
 	}

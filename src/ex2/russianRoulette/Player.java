@@ -14,10 +14,17 @@ public class Player implements Runnable {
 	@Override
 	public void run() {
 		while (alive) {
-			boolean didShoot = gun.pullTrigger();
-			if (didShoot) {
-				alive = false;
-				System.out.println(name + " got shot.");
+			try {
+				boolean didShoot = gun.pullTrigger();
+				if (didShoot) {
+					alive = false;
+					System.out.println(name + " -> BANG!");
+				} else {
+					System.out.println(name + " -> click");
+				}
+			} catch (AllChambersTriedException e) {
+				System.out.println(name + " -> stopped playing and survived.");
+				break;
 			}
 		}
 	}
