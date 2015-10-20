@@ -3,12 +3,12 @@ package serie05.russianRoulette;
 public class Player implements Runnable {
 	
 	private String name;
-	private Gun gun;
+	private Table table;
 	private boolean alive = true;
 
-	public Player(String name, Gun gun) {
+	public Player(String name, Table table) {
 		this.name = name;
-		this.gun = gun;
+		this.table = table;
 	}
 
 	@Override
@@ -16,9 +16,9 @@ public class Player implements Runnable {
 		while (alive) {
 			try {
 				System.out.println(name + " is trying to get the gun.");
-				gun.getGun(this);
+				Gun gun = table.takeGun(this);
 				System.out.println(name + " is holding gun.");
-				boolean didShoot = gun.pullTrigger(this);
+				boolean didShoot = gun.pullTrigger();
 				if (didShoot) {
 					alive = false;
 					System.out.println(name + " -> BANG!");
@@ -26,7 +26,7 @@ public class Player implements Runnable {
 					System.out.println(name + " -> click");
 				}
 				System.out.println(name + " is placing the gun back on the table.");
-				gun.placeGun();
+				table.placeGun(gun);
 			} catch (AllChambersTriedException e) {
 				System.out.println(name + " -> stopped playing and survived.");
 				break;
