@@ -24,11 +24,9 @@ public class Table {
         return returnedGun;
     }
 
-    // TODO: fix this.
     public synchronized Gun takeGunFairly(Player player) throws InterruptedException {
-        this.victim = player;
         // This is fair, since the players always alternate
-        while (this.gun == null && victim == player) {
+        while (this.gun == null || player == victim) {
             wait();
         }
         Gun returnedGun = gun;
@@ -36,5 +34,6 @@ public class Table {
         this.victim = player;
         return returnedGun;
     }
+
 
 }
