@@ -1,4 +1,4 @@
-package ex2.russianRoulette;
+package serie05.russianRoulette;
 
 public class Player implements Runnable {
 	
