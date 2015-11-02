@@ -9,7 +9,13 @@ public class GhostHouse {
 		LinkedList<FriendDoor> friends = new LinkedList<FriendDoor>();
 		ConcurrentLinkedQueue<Ghost> ghosts = new ConcurrentLinkedQueue<Ghost>();
 		LinkedList<Thread> threads = new LinkedList<Thread>();
-		int n = 10;//TODO get from args
+		int n;
+		if (args.length > 0) {
+			n = Integer.parseInt(args[0]);
+		} else {
+			n = 10;
+		}
+		System.out.println("Using n=" + n);
 		for(int i=0;i<4;i++)
 		{
 			FriendDoor friend = new FriendDoor(n, ghosts);
