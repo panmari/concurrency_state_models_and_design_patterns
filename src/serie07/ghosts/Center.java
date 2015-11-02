@@ -28,11 +28,11 @@ public class Center extends RunnablePerson {
 		while(alive)
 		{
 			double rnd = Math.random();
-			if(rnd<0.4)
+			if(rnd < 0.4)
 			{
 				killGhost();
 			}
-			if((System.currentTimeMillis()-timeAtLastCheck.getTime())/1000>2)
+			if((System.currentTimeMillis() - timeAtLastCheck.getTime())/1000 > 2)
 			{
 				checkNrOfGhosts();
 				timeAtLastCheck.setTime(System.currentTimeMillis());
@@ -40,7 +40,6 @@ public class Center extends RunnablePerson {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -51,21 +50,22 @@ public class Center extends RunnablePerson {
 		int sumOfGhosts = 0;
 		for(FriendDoor friend:friends)
 		{
-			sumOfGhosts+=friend.getNrOfGhostsEntered();
+			sumOfGhosts += friend.getNrOfGhostsEntered();
 		}
 		System.out.println("SumOfGhosts: "+sumOfGhosts);
-		System.out.println("difference=living ghosts: "+(sumOfGhosts-killedGhosts));
-		if(sumOfGhosts-killedGhosts>n)
+		int currentlyLivingGhosts = sumOfGhosts - killedGhosts;
+		System.out.println("difference=living ghosts: " + currentlyLivingGhosts);
+		if(currentlyLivingGhosts > n)
 		{
-			for(FriendDoor friend:friends)
+			for(FriendDoor friend: friends)
 			{
 				friend.closeDoor();
 			}
 			doorsClosed = true;
 		}
-		else if(sumOfGhosts-killedGhosts<n/2&&doorsClosed)
+		else if(currentlyLivingGhosts < n/2 && doorsClosed)
 		{
-			for(FriendDoor friend:friends)
+			for(FriendDoor friend: friends)
 			{
 				friend.openDoor();
 			}
@@ -74,7 +74,7 @@ public class Center extends RunnablePerson {
 	}
 
 	private void killGhost() {
-		if(ghosts.size()>0)
+		if(ghosts.size() > 0)
 		{
 			ghosts.poll();
 			killedGhosts++;

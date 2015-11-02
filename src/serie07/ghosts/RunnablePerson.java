@@ -10,7 +10,4 @@ abstract public class RunnablePerson implements Runnable {
 	public void kill() {
 		alive = false;
 	}
-
-
-
 }

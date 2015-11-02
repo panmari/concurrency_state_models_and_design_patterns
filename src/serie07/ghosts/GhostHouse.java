@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class GhostHouse {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		LinkedList<FriendDoor> friends = new LinkedList<FriendDoor>();
 		ConcurrentLinkedQueue<Ghost> ghosts = new ConcurrentLinkedQueue<Ghost>();
 		LinkedList<Thread> threads = new LinkedList<Thread>();
@@ -18,25 +18,19 @@ public class GhostHouse {
 		System.out.println("Using n=" + n);
 		for(int i=0;i<4;i++)
 		{
-			FriendDoor friend = new FriendDoor(n, ghosts);
+			FriendDoor friend = new FriendDoor(ghosts);
 			Thread thread = new Thread(friend);
 			threads.add(thread);
 			friends.add(friend);
 		}
-		RunnablePerson center = new Center(n, ghosts,friends);
-		Thread centerthread = new Thread(center);
-		threads.add(centerthread);
+		RunnablePerson center = new Center(n, ghosts, friends);
+		threads.add(new Thread(center));
 		for(Thread thread:threads)
 		{
 			thread.start();
 		}
 		System.out.println("started");
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Thread.sleep(10000);
 		for(FriendDoor thread:friends)
 		{
 			thread.kill();
