@@ -13,7 +13,7 @@ public class GhostHouse {
 		if (args.length > 0) {
 			n = Integer.parseInt(args[0]);
 		} else {
-			n = 10;
+			n = 100;
 		}
 		System.out.println("Using n=" + n);
 		for(int i=0; i < 4; i++)

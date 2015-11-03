@@ -15,6 +15,7 @@ public class Center extends RunnablePerson {
 	private List<FriendDoor> friends;
 	private List<ComAnswer> comAnswers = new ArrayList<>();
 	private boolean doorsClosed;
+	private int currentlyLivingGhosts = 0;
 	
 	
 	public Center(int n, ConcurrentLinkedQueue<Ghost> ghosts, LinkedList<FriendDoor> friends) {
@@ -73,7 +74,7 @@ public class Center extends RunnablePerson {
 			// Clean up list.
 			comAnswers.clear();
 			System.out.println("Total ghosts entered = " + sumOfGhosts);
-			int currentlyLivingGhosts = sumOfGhosts - killedGhosts;
+			currentlyLivingGhosts = sumOfGhosts - killedGhosts;
 			System.out.println("currently alive ghosts = " + currentlyLivingGhosts);
 			if(currentlyLivingGhosts > n) {
 				System.out.println("Closing doors...");
@@ -102,10 +103,11 @@ public class Center extends RunnablePerson {
 	}
 
 	private void killGhost() {
-		if(ghosts.size() > 0)
+		if(currentlyLivingGhosts > 0)
 		{
 			ghosts.poll();
 			killedGhosts++;
+			currentlyLivingGhosts--;
 		}
 	}
 
