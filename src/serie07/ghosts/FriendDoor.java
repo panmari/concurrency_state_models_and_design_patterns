@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 public class FriendDoor extends RunnablePerson {
 
 	private int ghostsLetThrough;
-	private boolean shouldLetGhostsThrough;
+	private volatile boolean shouldLetGhostsThrough;
 	private ComAnswer comAnswer;
 	private static int count = 0;
 	private int id;
@@ -20,22 +20,20 @@ public class FriendDoor extends RunnablePerson {
 
 	@Override
 	public void run() {
-		while(alive)
-		{
-			if(shouldLetGhostsThrough)
-			{
+		while(alive) {
+			if(shouldLetGhostsThrough) {
 				double rnd = Math.random();
-				if(rnd<0.1)
-				{
+				if(rnd < 0.1) {
 					letGhostEnter();
 				}
-				if(comAnswer != null && rnd < 0.5) {
-					// Answer com call.
-					comAnswer.speak(ghostsLetThrough);
-					// Set com answer as null, so we don't answer it multiple times.
-					comAnswer = null;
-				}
 			}
+			if(comAnswer != null && Math.random() < 0.5) {
+				// Answer com call.
+				comAnswer.speak(ghostsLetThrough);
+				// Set com answer as null, so we don't answer it multiple times.
+				comAnswer = null;
+			}
+
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {

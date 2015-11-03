@@ -16,7 +16,7 @@ public class GhostHouse {
 			n = 10;
 		}
 		System.out.println("Using n=" + n);
-		for(int i=0;i<4;i++)
+		for(int i=0; i < 4; i++)
 		{
 			FriendDoor friend = new FriendDoor(ghosts);
 			Thread thread = new Thread(friend);
