@@ -7,6 +7,12 @@ import java.util.concurrent.TimeoutException;
 
 public class ComAnswer implements Future<Integer> {
 
+    public final FriendDoor speaker;
+
+    public ComAnswer(FriendDoor fd) {
+        this.speaker = fd;
+    }
+
     private Integer answer = null;
 
     public void speak(Integer answer) {

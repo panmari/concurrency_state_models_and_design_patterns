@@ -31,6 +31,7 @@ public class GhostHouse {
 		}
 		System.out.println("started");
 		Thread.sleep(10000);
+		System.out.println("Enough! Tearing everything down...");
 		for(FriendDoor thread:friends)
 		{
 			thread.kill();

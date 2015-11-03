@@ -7,12 +7,15 @@ public class FriendDoor extends RunnablePerson {
 	private int ghostsLetThrough;
 	private boolean shouldLetGhostsThrough;
 	private ComAnswer comAnswer;
+	private static int count = 0;
+	private int id;
 
 	public FriendDoor(ConcurrentLinkedQueue<Ghost> ghosts) {
 		this.alive = true;
 		this.ghosts = ghosts;
 		this.ghostsLetThrough = 0;
 		this.shouldLetGhostsThrough = true;
+		this.id = ++count;
 	}
 
 	@Override
@@ -27,7 +30,7 @@ public class FriendDoor extends RunnablePerson {
 					letGhostEnter();
 				}
 				if(comAnswer != null && rnd < 0.5) {
-					// Answer com call
+					// Answer com call.
 					comAnswer.speak(ghostsLetThrough);
 					// Set com answer as null, so we don't answer it multiple times.
 					comAnswer = null;
@@ -45,8 +48,9 @@ public class FriendDoor extends RunnablePerson {
 		ghosts.add(new Ghost());
 		ghostsLetThrough++;
 	}
-	public Future<Integer> getNrOfGhostsEntered() {
-		comAnswer = new ComAnswer();
+
+	public ComAnswer tryToCallOnCom() {
+		comAnswer = new ComAnswer(this);
 		return comAnswer;
 	}
 
@@ -56,6 +60,10 @@ public class FriendDoor extends RunnablePerson {
 
 	public void openDoor() {
 		shouldLetGhostsThrough = true;
+	}
+
+	public String toString() {
+		return "Friend " + id;
 	}
 
 }
