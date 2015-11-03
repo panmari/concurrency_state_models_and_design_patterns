@@ -26,7 +26,7 @@ public class FriendDoor extends RunnablePerson {
 				{
 					letGhostEnter();
 				}
-				if(comAnswer != null && rnd < 0.5) {
+				if(comAnswer != null) {
 					// Answer com call
 					comAnswer.speak(ghostsLetThrough);
 					// Set com answer as null, so we don't answer it multiple times.
@@ -46,6 +46,7 @@ public class FriendDoor extends RunnablePerson {
 		ghostsLetThrough++;
 	}
 	public Future<Integer> getNrOfGhostsEntered() {
+		assert comAnswer == null;
 		comAnswer = new ComAnswer();
 		return comAnswer;
 	}
