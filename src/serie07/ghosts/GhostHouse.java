@@ -30,7 +30,7 @@ public class GhostHouse {
 			thread.start();
 		}
 		System.out.println("started");
-		Thread.sleep(10000);
+		Thread.sleep(20000);
 		System.out.println("Enough! Tearing everything down...");
 		for(FriendDoor thread:friends)
 		{
