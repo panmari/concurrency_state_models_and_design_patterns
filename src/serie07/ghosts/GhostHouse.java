@@ -16,7 +16,7 @@ public class GhostHouse {
 			n = 10;
 		}
 		System.out.println("Using n=" + n);
-		for(int i=0;i<4;i++)
+		for(int i=0; i < 4; i++)
 		{
 			FriendDoor friend = new FriendDoor(ghosts);
 			Thread thread = new Thread(friend);
@@ -31,6 +31,7 @@ public class GhostHouse {
 		}
 		System.out.println("started");
 		Thread.sleep(10000);
+		System.out.println("Enough! Tearing everything down...");
 		for(FriendDoor thread:friends)
 		{
 			thread.kill();

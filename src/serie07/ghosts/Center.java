@@ -13,7 +13,7 @@ public class Center extends RunnablePerson {
 	private int killedGhosts;
 	private Date timeAtLastCheck;
 	private List<FriendDoor> friends;
-	private List<Future<Integer>> comAnswers = new ArrayList<>();
+	private List<ComAnswer> comAnswers = new ArrayList<>();
 	private boolean doorsClosed;
 	
 	
@@ -58,9 +58,10 @@ public class Center extends RunnablePerson {
 
 	private void collectAnswersFromCom() throws ExecutionException, InterruptedException {
 		boolean allAnswersAvailable = true;
-		for (Future<Integer> f: comAnswers) {
+		for (ComAnswer f: comAnswers) {
 			if (!f.isDone()) {
 				allAnswersAvailable = false;
+				System.out.println("Answer missing from " + f.speaker);
 				break;
 			}
 		}
@@ -71,16 +72,18 @@ public class Center extends RunnablePerson {
 			}
 			// Clean up list.
 			comAnswers.clear();
-			System.out.println("SumOfGhosts: "+sumOfGhosts);
+			System.out.println("Total ghosts entered = " + sumOfGhosts);
 			int currentlyLivingGhosts = sumOfGhosts - killedGhosts;
-			System.out.println("difference=living ghosts: " + currentlyLivingGhosts);
+			System.out.println("currently alive ghosts = " + currentlyLivingGhosts);
 			if(currentlyLivingGhosts > n) {
+				System.out.println("Closing doors...");
 				for(FriendDoor friend: friends) {
 					friend.closeDoor();
 				}
 				doorsClosed = true;
 			}
 			else if(currentlyLivingGhosts < n/2 && doorsClosed) {
+				System.out.println("Opening doors...");
 				for(FriendDoor friend: friends) {
 					friend.openDoor();
 				}
@@ -94,7 +97,7 @@ public class Center extends RunnablePerson {
 	private void callFriendsOnCom() {
 		System.out.println("Calling friends on com... GhostsKilled: "+ killedGhosts);
 		for(FriendDoor friend: friends) {
-			comAnswers.add(friend.getNrOfGhostsEntered());
+			comAnswers.add(friend.tryToCallOnCom());
 		}
 	}
 
