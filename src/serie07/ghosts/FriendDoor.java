@@ -1,12 +1,13 @@
 package serie07.ghosts;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.*;
 
 public class FriendDoor extends RunnablePerson {
 
 	private int ghostsLetThrough;
 	private boolean shouldLetGhostsThrough;
-	
+	private ComAnswer comAnswer;
+
 	public FriendDoor(ConcurrentLinkedQueue<Ghost> ghosts) {
 		this.alive = true;
 		this.ghosts = ghosts;
@@ -25,6 +26,12 @@ public class FriendDoor extends RunnablePerson {
 				{
 					letGhostEnter();
 				}
+				if(comAnswer != null && rnd < 0.5) {
+					// Answer com call
+					comAnswer.speak(ghostsLetThrough);
+					// Set com answer as null, so we don't answer it multiple times.
+					comAnswer = null;
+				}
 			}
 			try {
 				Thread.sleep(10);
@@ -33,16 +40,20 @@ public class FriendDoor extends RunnablePerson {
 			}
 		}
 	}
+
 	private void letGhostEnter() {
 		ghosts.add(new Ghost());
 		ghostsLetThrough++;
 	}
-	public int getNrOfGhostsEntered() {
-		return ghostsLetThrough;
+	public Future<Integer> getNrOfGhostsEntered() {
+		comAnswer = new ComAnswer();
+		return comAnswer;
 	}
+
 	public void closeDoor() {
 		shouldLetGhostsThrough = false;
 	}
+
 	public void openDoor() {
 		shouldLetGhostsThrough = true;
 	}
