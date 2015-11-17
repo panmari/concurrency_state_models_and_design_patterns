@@ -72,7 +72,10 @@ public class PassThroughShape implements Shape {
             this.positionHelper = ph;
         }
 
-        private void scaleAndMove(float widthScale, float heightScale, float xScale, float yScale) {
+        /**
+         * This actually does not need to be synchronized, but we do it for consistency's sake.
+         */
+        private synchronized void scaleAndMove(float widthScale, float heightScale, float xScale, float yScale) {
             // Very similar to lock splitting case. Locks are acquired twice,
             // but this is no problem since java uses reentrant locks.
             synchronized (dimensionHelper) {
