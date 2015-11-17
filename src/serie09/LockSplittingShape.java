@@ -13,7 +13,7 @@ public class LockSplittingShape implements Shape {
 		synchronized(positionLock)
 		{
 			x *= 1.1;
-			y /= 1.2;
+			y *= 0.8;
 		}
 	}
 
@@ -21,8 +21,8 @@ public class LockSplittingShape implements Shape {
 	public void changeDimension() {
 		synchronized(dimensionLock)
 		{
-			width*=1.5;
-			height/=1.8;
+			width *= 1.5;
+			height *= 0.2;
 		}
 	}
 
@@ -33,7 +33,7 @@ public class LockSplittingShape implements Shape {
 			synchronized(dimensionLock)
 			{
 				y *= 1.4;
-				height /= 1.6;
+				height *= 0.4;
 			}
 		}
 	}
